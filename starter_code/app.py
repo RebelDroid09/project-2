@@ -11,7 +11,7 @@ from flask import Flask, jsonify
 #################################################
 # Database Setup
 #################################################
-engine = create_engine("postgresql://pgadmin:LifeAfterSql0@localhost/project2_db")
+engine = create_engine("postgresql://postgres:LifeAfterSql0@localhost/project2_db")
 
 # reflect an existing database into a new model
 Base = automap_base()
@@ -36,24 +36,65 @@ app = Flask(__name__)
 def welcome():
     return
 
-@app.route("/heatmapData")
+@app.route("/heatmapData", methods=['GET', 'POST'])
 def names():
     # Create our session (link) from Python to the DB
     session = Session(engine)
 
     """Return a list of all passenger names"""
     # Query all passengers
-    latlonResults = session.query(Country_Lat_Lon).all()
-    corruptionResults = session.query(Corruption_Perception).all()
+    latlonResults = session.query(Country_Lat_Lon.id, Country_Lat_Lon.country_cd, Country_Lat_Lon.latitude, Country_Lat_Lon.longitude, Country_Lat_Lon.country).all()
+    corruptionResults = session.query(Corruption_Perception.id, Corruption_Perception.year_, Corruption_Perception.country, Corruption_Perception.iso3, Corruption_Perception.cpi_score, Corruption_Perception.ranking).all()
+    happinessResults = session.query(World_Happiness.id, World_Happiness.year_, World_Happiness.ranking, World_Happiness.country, World_Happiness.score, World_Happiness.gdp_per_capita, World_Happiness.social_support, World_Happiness.healthy_life_expectancy, World_Happiness.freedom_to_make_life_choices, World_Happiness.generosity, World_Happiness.perceptions_of_corruption).all()
 
-    results = [latlonResults, corruptionResults]
+    allLatLonResults = []
+    allCorruptionResults = []
+    allHappinessResults = []
+
+    results = []
 
     session.close()
 
-    # Convert list of tuples into normal list
-    all_names = list(np.ravel(results))
+    #Rolling all tables into defined objects, which should facilitate JSON serialization
+    for id, country_cd, latitude, longitude, country in latlonResults:
+        latlon_dict = {}
+        latlon_dict["id"] = id
+        latlon_dict["country_cd"] = country_cd
+        latlon_dict["latitude"] = latitude
+        latlon_dict["longitude"] = longitude
+        latlon_dict["country"] = country
+        allLatLonResults.append(latlon_dict)
 
-    return jsonify(all_names)
+    for id, year_, country, iso3, cpi_score, ranking in corruptionResults:
+        corrupt_dict = {}
+        corrupt_dict["id"] = id
+        corrupt_dict["country_cd"] = country_cd
+        corrupt_dict["latitude"] = latitude
+        corrupt_dict["longitude"] = longitude
+        corrupt_dict["country"] = country
+        allCorruptionResults.append(corrupt_dict)
+
+    for id, year_, ranking, country, score, gdp_per_capita, social_support, healthy_life_expectations, freedom_to_make_life_choices, generosity, perceptions_of_corruption in happinessResults:
+        happiness_dict = {}
+        happiness_dict["id"] = id
+        happiness_dict["ranking"] = country_cd
+        happiness_dict["country"] = latitude
+        happiness_dict["score"] = longitude
+        happiness_dict["gdp_per_capita"] = country
+        happiness_dict["social_support"] = country_cd
+        happiness_dict["healthy_life_expectations"] = latitude
+        happiness_dict["freedom_to_make_life_choices"] = longitude
+        happiness_dict["generosity"] = country
+        happiness_dict["perceptions_of_corruption"] = longitude
+        allHappinessResults.append(happiness_dict)
+
+    #Combine all results into one object
+    results = [allLatLonResults, allCorruptionResults, allHappinessResults]
+
+    # Convert list of tuples into normal list
+    # all_names = list(np.ravel(results))
+
+    return jsonify(results)
 
 
 # @app.route("/api/v1.0/passengers")
