@@ -1,7 +1,6 @@
 var returnData;
 
 $.ajax("/heatmapData", {
-    data: data,
     contentType : "application/json",
     type : "GET",
     success: function(result) {

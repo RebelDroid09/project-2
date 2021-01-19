@@ -4,8 +4,7 @@ import sqlalchemy
 from sqlalchemy.ext.automap import automap_base
 from sqlalchemy.orm import Session
 from sqlalchemy import create_engine, func
-
-from flask import Flask, jsonify
+from flask import Flask, jsonify, render_template
 
 
 #################################################
@@ -41,7 +40,6 @@ def names():
     # Create our session (link) from Python to the DB
     session = Session(engine)
 
-    """Return a list of all passenger names"""
     # Query all passengers
     latlonResults = session.query(Country_Lat_Lon.id, Country_Lat_Lon.country_cd, Country_Lat_Lon.latitude, Country_Lat_Lon.longitude, Country_Lat_Lon.country).all()
     corruptionResults = session.query(Corruption_Perception.id, Corruption_Perception.year_, Corruption_Perception.country, Corruption_Perception.iso3, Corruption_Perception.cpi_score, Corruption_Perception.ranking).all()
@@ -91,10 +89,12 @@ def names():
     #Combine all results into one object
     results = [allLatLonResults, allCorruptionResults, allHappinessResults]
 
-    # Convert list of tuples into normal list
-    # all_names = list(np.ravel(results))
-
     return jsonify(results)
+
+@app.route("/heatmap")
+def heatmap():
+
+    return render_template('heatmap.html')
 
 if __name__ == '__main__':
     app.run(debug=True)
