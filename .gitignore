@@ -1,5 +1,5 @@
 # Ignore the local javascript config file
-Leaflet-Step-1/static/js/config.js
+static/js/config.js
 
 # Byte-compiled / optimized / DLL files
 __pycache__/
