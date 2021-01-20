@@ -15,23 +15,40 @@ $.ajax("/heatmapData", {
 createMap(returnData);
 
 function createMap(data) {
-    // var myTileLayer = L.tileLayer("https://api.mapbox.com/styles/v1/mapbox/{id}/tiles/{z}/{x}/{y}?access_token={accessToken}", {
-    //     attribution: "Map data &copy; <a href=\"https://www.openstreetmap.org/\">OpenStreetMap</a> contributors, <a href=\"https://creativecommons.org/licenses/by-sa/2.0/\">CC-BY-SA</a>, Imagery © <a href=\"https://www.mapbox.com/\">Mapbox</a>",
-    //     maxZoom: 18,
-    //     id: "streets-v11",
-    //     accessToken: API_KEY
-    // });      
-      
-    // var myMap = L.map("mapid", {
-    //     center: usaCoords,
-    //     zoom: 3
-    // });
-
+    var myBaseLayer = L.tileLayer("https://api.mapbox.com/styles/v1/mapbox/{id}/tiles/{z}/{x}/{y}?access_token={accessToken}", {
+        attribution: "Map data &copy; <a href=\"https://www.openstreetmap.org/\">OpenStreetMap</a> contributors, <a href=\"https://creativecommons.org/licenses/by-sa/2.0/\">CC-BY-SA</a>, Imagery © <a href=\"https://www.mapbox.com/\">Mapbox</a>",
+        maxZoom: 18,
+        id: "streets-v11",
+        accessToken: API_KEY
+    });       
+    
     // myTileLayer.addTo(myMap);
 
     var processedData = createHeatmapMarkers(data);
 
     console.log(processedData);
+
+    //Code was pulled from the heatmap example at https://www.patrick-wied.at/static/heatmapjs/example-heatmap-leaflet.html
+    var cfg = {
+        // radius should be small ONLY if scaleRadius is true (or small radius is intended)
+        // if scaleRadius is false it will be the constant radius used in pixels
+        "radius": 5,
+        "maxOpacity": .8,
+        // scales the radius based on map zoom
+        "scaleRadius": true,
+        // if set to false the heatmap uses the global maximum for colorization
+        // if activated: uses the data maximum within the current map boundaries
+        //   (there will always be a red spot with useLocalExtremas true)
+        "useLocalExtrema": false,
+        // which field name in your data represents the latitude - default "lat"
+        latField: 'lat',
+        // which field name in your data represents the longitude - default "lng"
+        lngField: 'lng',
+        // which field name in your data represents the data value - default "value"
+        valueField: 'count'
+    };
+
+    var heatmapLayer = new HeatmapOverlay(cfg);
 
     // var quakeGroup = L.layerGroup(quakeMarkers);
 
@@ -43,6 +60,11 @@ function createMap(data) {
     // L.control.layers(null, overlayMaps, {
     //     collapsed: false
     // }).addTo(myMap);
+
+    // var myMap = L.map("mapid", {
+    //     center: usaCoords,
+    //     zoom: 3
+    // });
 
     // // Create a legend to display information about our map
     // var info = L.control({
