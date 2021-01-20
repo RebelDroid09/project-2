@@ -75,15 +75,16 @@ def names():
     for id, year_, ranking, country, score, gdp_per_capita, social_support, healthy_life_expectations, freedom_to_make_life_choices, generosity, perceptions_of_corruption in happinessResults:
         happiness_dict = {}
         happiness_dict["id"] = id
-        happiness_dict["ranking"] = country_cd
-        happiness_dict["country"] = latitude
-        happiness_dict["score"] = longitude
-        happiness_dict["gdp_per_capita"] = country
-        happiness_dict["social_support"] = country_cd
-        happiness_dict["healthy_life_expectations"] = latitude
-        happiness_dict["freedom_to_make_life_choices"] = longitude
-        happiness_dict["generosity"] = country
-        happiness_dict["perceptions_of_corruption"] = longitude
+        happiness_dict["year"] = year_
+        happiness_dict["ranking"] = ranking
+        happiness_dict["country"] = country
+        happiness_dict["score"] = score
+        happiness_dict["gdp_per_capita"] = gdp_per_capita
+        happiness_dict["social_support"] = social_support
+        happiness_dict["healthy_life_expectations"] = healthy_life_expectations
+        happiness_dict["freedom_to_make_life_choices"] = freedom_to_make_life_choices
+        happiness_dict["generosity"] = generosity
+        happiness_dict["perceptions_of_corruption"] = perceptions_of_corruption
         allHappinessResults.append(happiness_dict)
 
     #Combine all results into one object
