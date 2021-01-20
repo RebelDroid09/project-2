@@ -6,13 +6,13 @@ $.ajax("/heatmapData", {
     success: function(result) {
         returnData = result
         console.log(result);
+
+        createMap(result);
     },
     error: function() {
         console.log('Failed to retrieve data.');
     }
 });
-
-createMap(returnData);
 
 function createMap(data) {
 
@@ -113,17 +113,24 @@ function createHeatmapMarkers(rawCountries){
             maxValue = newScore;
         }
 
-        tempLatLonObj = rawCountries[1].find(o => o.country == country);
+        let tempLatLonObj = rawCountries[0].find(o => o.country == newCountry);
 
         if (tempLatLonObj)
         {
+            console.log("Country coordinates found");
+            console.log(tempLatLonObj);
             newLat = tempLatLonObj.latitude;
             newLon = tempLatLonObj.longitude;
         } 
+        else
+        {
+            console.log("No coordinates found");
+            continue;
+        }
         
         tempHeatmapValue = {lat: newLat, lng: newLon, count: newScore};
           
-        heatGroup.push(newCircle);
+        heatGroup.push(tempHeatmapValue);
     }
 
     console.log("Combining final data sets");

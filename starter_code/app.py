@@ -66,10 +66,11 @@ def names():
     for id, year_, country, iso3, cpi_score, ranking in corruptionResults:
         corrupt_dict = {}
         corrupt_dict["id"] = id
-        corrupt_dict["country_cd"] = country_cd
-        corrupt_dict["latitude"] = latitude
-        corrupt_dict["longitude"] = longitude
+        corrupt_dict["year"] = year_
         corrupt_dict["country"] = country
+        corrupt_dict["iso3"] = iso3
+        corrupt_dict["cpi_score"] = cpi_score
+        corrupt_dict["ranking"] = ranking
         allCorruptionResults.append(corrupt_dict)
 
     for id, year_, ranking, country, score, gdp_per_capita, social_support, healthy_life_expectations, freedom_to_make_life_choices, generosity, perceptions_of_corruption in happinessResults:
