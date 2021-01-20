@@ -1,0 +1,61 @@
+body {
+  padding: 0;
+  margin: 0;
+}
+
+#mapid,
+body,
+html {
+  height: 100%;
+  width: 100%;
+}
+
+.box {
+  float: left;
+  height: 10px;
+  width: 10px;
+  margin-right: 5px;
+  margin-top: 1px;
+  border: 1px solid black;
+  clear: both;
+}
+
+.box.depth1 {
+  background-color: #90ee90;
+}
+
+.box.depth2 {
+  background-color: #adff2f;
+}
+
+.box.depth3 {
+  background-color: #ffff00;
+}
+.box.depth4 {
+  background-color: #ffae42;
+}
+
+.box.depth5 {
+  background-color: #ff4500;
+}
+
+.box.depth6 {
+  background-color: #FF0000;
+}
+
+.legend {
+  padding: 10px 40px 10px 40px;
+  font-family: Sanchez, serif;
+  font-size: 16px;
+  font-weight: bold;
+  line-height: 15px;
+  color: #555;
+  background-color: white;
+  border-radius: 5px;
+  box-shadow: 0 0 15px rgba(0, 0, 0, 0.2);
+}
+
+.nowrap {
+  white-space: nowrap ;
+}
+
