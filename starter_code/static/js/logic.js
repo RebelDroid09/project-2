@@ -29,7 +29,9 @@ function createMap(data) {
 
     // myTileLayer.addTo(myMap);
 
-    var quakeMarkers = createHeatmapMarkers(data);
+    var processedData = createHeatmapMarkers(data);
+
+    console.log(processedData);
 
     // var quakeGroup = L.layerGroup(quakeMarkers);
 
@@ -71,10 +73,15 @@ function createHeatmapMarkers(rawCountries){
     var tempHeatmapValue;
     var finalData;
 
+    console.log("Starting loop for data processing");
+
     for(var i = 0; i < rawCountries[2].length; i++)
     {
         newCountry = rawCountries[2][i].country;
+        console.log(newCountry);
+
         newScore = rawCountries[2][i].score;
+        console.log(newScore);
 
         if (newScore > maxValue)
         {
@@ -93,6 +100,9 @@ function createHeatmapMarkers(rawCountries){
           
         heatGroup.push(newCircle);
     }
+
+    console.log("Combining final data sets");
+    console.log(maxValue);
 
     finalData = {max: maxValue, data: heatGroup};
 
