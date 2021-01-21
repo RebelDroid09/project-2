@@ -38,10 +38,12 @@ function buildPlots(dataID) {
       //CPI_Score_10 = CPI_Score_10.slice(0,11);
       //console.log(CPI_Score_10);
 
+      var arrayName = ["Rank 10", "Rank 9", "Rank 8", "Rank 7", "Rank 6", "Rank 5", "Rank 4", "Rank 3", "Rank 2", "Rank 1"]
+
       var trace1 = {
         x: CPI_Score_10,
-        y: Ranking_10,
-        text: Country_10,
+        y: Country_10,
+        text: arrayName,
         type:"bar",
         orientation: 'h'
         };
@@ -62,17 +64,21 @@ function buildPlots(dataID) {
         }
     };
     // bar plot using Plotly
-    Plotly.newPlot("bar", data1);
+    Plotly.newPlot("bar", data1, layout1);
 
+    var idSet = [10, 9, 8, 7, 6, 5, 4, 3, 2, 1]
+
+    console.log(CPI_Score);
+    
     var trace2 = {
-      x: CPI_Score,
-      y: Ranking,
+      x: CPI_Score_10,
+      y: idSet,
       mode: "markers",
       marker: {
-          size: CPI_Score,
-          color: CPI_Score
+          size: CPI_Score_10,
+          color: idSet
       },
-      text: Country
+      text: Country_10
   };
   // set layout for bubble plot
   let layout2 = {
@@ -87,7 +93,6 @@ function buildPlots(dataID) {
   let data2 = [trace2];
   // bubble plot using Plotly
   Plotly.newPlot("bubble", data2, layout2);
-
 });
 }
 
@@ -98,19 +103,27 @@ function init() {
   var selector = d3.select("#selDataset");
 
     // Use the list of sample names to populate the select options
-    d3.json("CPI_2019_2018_2017.json").then((data) =>{
+    d3.json("/static/CPI_2019_2018_2017.json").then((data) =>{
     var sampleNames = data.data.map(item=> item["Year_"]);
     console.log("sampleNames :: ",sampleNames)
 
-    sampleNames.forEach((sample) => {
+    var uniqueNames =  sampleNames.filter(onlyUnique);
+
+    uniqueNames.forEach((sample) => {
       selector
         .append("option")
         .text(sample)
         .property("value", sample);
      });
 
-
+     buildPlots(2019);
     });
   }
 
+  function onlyUnique(value, index, self) {
+    return self.indexOf(value) === index;
+  }
+
   init()
+
+  

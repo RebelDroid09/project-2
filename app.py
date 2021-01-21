@@ -57,7 +57,7 @@ def comparison():
     return render_template('comparison.html')
 
 @app.route('/d3', methods=['post', 'get'])
-def happiness():
+def chart():
         mycursor.execute("SELECT * FROM corruption_perception" )
         data = mycursor.fetchall()
         return render_template("chart.html", data=data)
