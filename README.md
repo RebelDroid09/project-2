@@ -14,4 +14,4 @@
 6. Web Landing Page with Nav Links - Search, Map, Data
 
 *Data
-https://user-images.githubusercontent.com/66211603/105425306-b885b500-5c0e-11eb-94a3-e96aa99cf509.PNG
+
