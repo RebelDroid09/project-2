@@ -52,9 +52,15 @@ def happiness():
         return render_template("data.html", data=data)
 
 # route place holder for Leaflet and add another one for D3
-@app.route('/comparison') 
+@app.route('/comparison')
 def comparison():
     return render_template('comparison.html')
+
+@app.route('/d3', methods=['post', 'get'])
+def happiness():
+        mycursor.execute("SELECT * FROM corruption_perception" )
+        data = mycursor.fetchall()
+        return render_template("chart.html", data=data)
 
 @app.route("/heatmapData", methods=['GET', 'POST'])
 def names():
