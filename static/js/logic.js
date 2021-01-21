@@ -21,12 +21,11 @@ function createMap(data) {
 
     var myMap = L.map("mapid", {
         center: usaCoords,
-        zoom: 3
+        zoom: 1
     });
 
     var myBaseLayer = L.tileLayer("https://api.mapbox.com/styles/v1/mapbox/{id}/tiles/{z}/{x}/{y}?access_token={accessToken}", {
         attribution: "Map data &copy; <a href=\"https://www.openstreetmap.org/\">OpenStreetMap</a> contributors, <a href=\"https://creativecommons.org/licenses/by-sa/2.0/\">CC-BY-SA</a>, Imagery © <a href=\"https://www.mapbox.com/\">Mapbox</a>",
-        maxZoom: 18,
         id: "streets-v11",
         accessToken: API_KEY
     });       
@@ -35,18 +34,20 @@ function createMap(data) {
 
     var processedData = createHeatmapMarkers(data);
 
-    console.log(processedData); 
-    
-    var heatPoints = L.heatLayer(processedData.data, heatmapOptions);
+    console.log(processedData);
 
     var heatmapOptions = {
-        minOpacity: 1.0,
-        maxZoom: 3,
-        max: 1.0,
-        radius: 50,
+        minOpacity: 0.1,
+        maxZoom: 0,
+        max: processedData.max,
+        radius: 25,
         blur: 15,
-        gradient: {0.4: 'blue', 0.65: 'lime', 1: 'red'}
+        gradient: {0.4: 'blue', 0.6: 'lime', 0.75: 'orange', 0.9: 'red'}
     };
+
+    console.log(processedData.data);
+
+    var heatPoints = L.heatLayer(processedData.data, heatmapOptions);
 
     heatPoints.addTo(myMap);
 
