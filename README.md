@@ -12,3 +12,6 @@
 4. Ajax - JS Libibrary didn't cover in class
 5. 3 data sets - each over 100 records
 6. Web Landing Page with Nav Links - Search, Map, Data
+
+### Presentation
+[Project2_WorldHappiness_Presentation.pptx](https://github.com/RebelDroid09/project-2/files/5852662/Project2_WorldHappiness_Presentation.pptx)
