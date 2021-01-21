@@ -1,4 +1,5 @@
 var returnData;
+var usaCoords = [39.83, -98.58];
 
 $.ajax("/heatmapData", {
     contentType : "application/json",
@@ -18,39 +19,42 @@ function createMap(data) {
 
     console.log("In the create map function");
 
-    // var myBaseLayer = L.tileLayer("https://api.mapbox.com/styles/v1/mapbox/{id}/tiles/{z}/{x}/{y}?access_token={accessToken}", {
-    //     attribution: "Map data &copy; <a href=\"https://www.openstreetmap.org/\">OpenStreetMap</a> contributors, <a href=\"https://creativecommons.org/licenses/by-sa/2.0/\">CC-BY-SA</a>, Imagery © <a href=\"https://www.mapbox.com/\">Mapbox</a>",
-    //     maxZoom: 18,
-    //     id: "streets-v11",
-    //     accessToken: API_KEY
-    // });       
+    var myMap = L.map("mapid", {
+        center: usaCoords,
+        zoom: 1
+    });
+
+    var myBaseLayer = L.tileLayer("https://api.mapbox.com/styles/v1/mapbox/{id}/tiles/{z}/{x}/{y}?access_token={accessToken}", {
+        attribution: "Map data &copy; <a href=\"https://www.openstreetmap.org/\">OpenStreetMap</a> contributors, <a href=\"https://creativecommons.org/licenses/by-sa/2.0/\">CC-BY-SA</a>, Imagery © <a href=\"https://www.mapbox.com/\">Mapbox</a>",
+        id: "streets-v11",
+        accessToken: API_KEY
+    });       
     
-    // myTileLayer.addTo(myMap);
+    myBaseLayer.addTo(myMap);
 
     var processedData = createHeatmapMarkers(data);
 
-    console.log(processedData);  
+    console.log(processedData);
 
-    //var heatmapLayer = new HeatmapOverlay(cfg);
+    var heatmapOptions = {
+        minOpacity: 0.1,
+        maxZoom: 0,
+        max: processedData.max,
+        radius: 25,
+        blur: 15,
+        gradient: {0.4: 'blue', 0.6: 'lime', 0.75: 'orange', 0.9: 'red'}
+    };
 
-    // var quakeGroup = L.layerGroup(quakeMarkers);
+    console.log(processedData.data);
 
-    // var overlayMaps = {
-    //     "Quake Markers": quakeGroup
-    // };
+    var heatPoints = L.heatLayer(processedData.data, heatmapOptions);
+
+    heatPoints.addTo(myMap);
 
     // // Create a layer control, pass in the baseMaps and overlayMaps. Add the layer control to the map
     // L.control.layers(null, overlayMaps, {
     //     collapsed: false
-    // }).addTo(myMap);
-
-    // var myMap = L.map("mapid", {
-    //     center: usaCoords,
-    //     zoom: 3,
-    //     layers: [myBaseLayer, heatmapLayer]
-    // });
-
-    // heatmapLayer.setData(processedData);
+    // }).addTo(myMap);  
 
     // // Create a legend to display information about our map
     // var info = L.control({
