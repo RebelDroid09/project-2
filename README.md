@@ -13,5 +13,5 @@
 5. 3 data sets - each over 100 records
 6. Web Landing Page with Nav Links - Search, Map, Data
 
-### Presentation
-[Project2_WorldHappiness_Presentation.pptx](https://github.com/RebelDroid09/project-2/files/5852662/Project2_WorldHappiness_Presentation.pptx)
+*Data
+https://user-images.githubusercontent.com/66211603/105425306-b885b500-5c0e-11eb-94a3-e96aa99cf509.PNG
