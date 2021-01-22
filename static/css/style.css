@@ -10,6 +10,10 @@ html {
   width: 100%;
 }
 
+#bar {
+  margin-bottom: 5px;
+}
+
 .box {
   float: left;
   height: 10px;
